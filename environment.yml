@@ -1,4 +1,4 @@
-name: epp-manova
+name: ukcordex-plots
 channels:
   - defaults
 dependencies:
@@ -8,4 +8,4 @@ dependencies:
   - netcdf4
   - matplotlib
   - ipykernel
-prefix: /usr/local/bin/Anaconda3/envs/epp-manova
+prefix: /usr/local/bin/Anaconda3/envs/ukcordex-plots
