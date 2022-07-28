@@ -1,3 +1,7 @@
+# import the required modules
+import xarray as xr
+import numpy as np
+
 import matplotlib
 import matplotlib.pyplot as plt
 
