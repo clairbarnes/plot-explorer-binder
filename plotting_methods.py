@@ -97,7 +97,7 @@ rcm_colours.update({gcm : "grey" for gcm in ['BCC-CSM1-1_r1i1p1', 'MRI-CGCM3_r1i
                                              'GFDL-ESM2G_r1i1p1', 'CCSM4_r1i1p1', 'CMCC-CM_r1i1p1', 'MPI-ESM-MR_r1i1p1'] if not gcm in rcm_colours.keys()})
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# replace diverging colourmap with sequential colourmap where values do not include 0
+# replace diverging colourmap with sequential colourmap where values to be plotted do not include 0
     
 def fix_cmap(cmap, vmin, vmax):
     
@@ -111,3 +111,27 @@ def fix_cmap(cmap, vmin, vmax):
     
     if vmax <= 0: # sequential, negative
         return {"PuOr" : "Oranges_r", "PuOr_r" : "Purples_r", "RdBu" : "Reds_r", "RdBu_r" : "Blues_r", "PRGn" : "Purples", "PRGn_r" : "Greens"}[cmap]
+    
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# get min & max values to be used in plotting, ensuring colourbar will be symmetric if values span 0
+
+def vrange(da):
+    
+    if type(da) == xr.core.dataarray.DataArray:
+        da = da.reset_coords(drop = True)
+        da = da.where(np.isfinite(da))
+        vmin = da.min().values
+        vmax = da.max().values
+    if type(da) == list:
+        vmin = min(da)
+        vmax = max(da)
+    else:
+        vmin = da.min()
+        vmax = da.max()        
+
+    if (np.sign(vmin) != 0) and (np.sign(vmax) != 0) and (np.sign(vmin) != np.sign(vmax)):
+        vmax = np.abs([vmin, vmax]).max()
+        vmin = -vmax
+    
+    return {"vmin" : vmin, "vmax" : vmax}
