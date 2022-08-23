@@ -17,7 +17,7 @@ crs_osgb = ccrs.TransverseMercator(approx = False, central_longitude = -2, centr
                                    false_easting = 400000, false_northing = -100000, globe = ccrs.Globe(datum = 'OSGB36', ellipse = 'airy'))
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# modified scatterplot to allow list of markers (taken from https://github.com/matplotlib/matplotlib/issues/11155)
+# modified scatterplot to accommodate list of markers (found at https://github.com/matplotlib/matplotlib/issues/11155)
 
 def mscatter(x,y,ax=None, m=None, **kw):
     if not ax: ax=plt.gca()
